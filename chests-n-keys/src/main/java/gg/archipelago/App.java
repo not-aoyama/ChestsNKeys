@@ -1,8 +1,13 @@
 package gg.archipelago;
 
-import javax.swing.JButton;
+import java.awt.BorderLayout;
+import java.awt.Component;
+
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
+
+import gg.archipelago.view.LoginPanel;
 
 /**
  * Hello world!
@@ -26,14 +31,14 @@ public class App {
     }
 
     private void displayFrame() {
-        // Create a button. This is just for testing.
-        JButton button = new JButton("Hello world!");
-        button.setBounds(150, 250, 200, 50);
+        // Start by displaying the login menu in the frame.
+        frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.X_AXIS));
+        LoginPanel loginPanel = new LoginPanel();
+        loginPanel.setAlignmentY(Component.CENTER_ALIGNMENT);
+        frame.getContentPane().add(loginPanel);
 
-        // Add the button to the frame, set the frame up, and display it.
-        frame.add(button);
-        frame.setSize(500, 600);
-        frame.setLayout(null); // use no layout managers
+        // Set the frame up, and display it.
+        frame.setSize(300, 200);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // End the application when the window is closed.
         frame.setVisible(true);
     }
