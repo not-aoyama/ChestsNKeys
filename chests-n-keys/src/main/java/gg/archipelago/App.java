@@ -1,6 +1,5 @@
 package gg.archipelago;
 
-import java.awt.BorderLayout;
 import java.awt.Component;
 
 import javax.swing.BoxLayout;
