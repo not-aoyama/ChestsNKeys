@@ -13,22 +13,39 @@ import gg.archipelago.view.LoginPanel;
  */
 public class App {
     /**
+     * The currently existing instance of the App class.
+     * There should only be one App at a time.
+     */
+    private static App instance;
+
+    /**
      * The window in which the app's GUI runs.
      */
-    private final JFrame frame;
+    private final JFrame frame = new JFrame();
 
     /**
      * The client that connects to the Archipelago server.
      */
-    private final ChestsNKeysClient client;
+    private final ChestsNKeysClient client = new ChestsNKeysClient();
 
     public App() {
-        frame = new JFrame();
-        client = new ChestsNKeysClient();
+        /*
+         * If there already is an instance of App, do nothing.
+         */
+        if (instance != null)
+            return;
         
+        // Mark this as the currently existing instance of App.
+        instance = this;
+        
+        // Set up and display the window.
         displayFrame();
     }
 
+    /**
+     * Sets up and displays the GUI window for this App.
+     * To start out with, the window will contain a login screen.
+     */
     private void displayFrame() {
         // Start by displaying the login menu in the frame.
         frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.X_AXIS));
@@ -50,5 +67,15 @@ public class App {
          */
         // Create the App
         SwingUtilities.invokeLater(() -> new App());
+    }
+
+    /**
+     * Returns the ChestsNKeysClient of the app, or null if there is no app yet.
+     * 
+     * @return the ChestsNKeysClient of the app, or null if there is no app yet
+     */
+    public static ChestsNKeysClient getClient() {
+        // Return null if there is no App yet for whatever reason.
+        return (instance == null) ? null : instance.client;
     }
 }

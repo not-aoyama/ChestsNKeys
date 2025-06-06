@@ -7,7 +7,18 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import gg.archipelago.App;
+
+import java.awt.event.ActionEvent;
+import java.net.URISyntaxException;
+
 public class LoginPanel extends JPanel {
+    // Make the text fields class variables so they can be accessed in multiple methods.
+    private final JTextField urlField = new JTextField();
+    private final JTextField portField = new JTextField();
+    private final JTextField slotField = new JTextField();
+    private final JPasswordField passwordField = new JPasswordField();
+
     public LoginPanel() {
         // Create a GroupLayout object and associate it with this panel
         GroupLayout layout = new GroupLayout(this);
@@ -23,12 +34,8 @@ public class LoginPanel extends JPanel {
         JLabel slotLabel = new JLabel("Slot Name");
         JLabel passwordLabel = new JLabel("Server Password");
 
-        JTextField urlField = new JTextField();
-        JTextField portField = new JTextField();
-        JTextField slotField = new JTextField();
-        JPasswordField passwordField = new JPasswordField();
-
         JButton submitButton = new JButton("Login");
+        submitButton.addActionListener(this::login);
 
         // Set up the layout with the components
         layout.setHorizontalGroup(
@@ -61,5 +68,20 @@ public class LoginPanel extends JPanel {
                     .addComponent(passwordField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                 .addComponent(submitButton)
         );
+    }
+
+    private void login(ActionEvent e) {
+        // Set the slot name and password of the client
+        App.getClient().setName(slotField.getText());
+        App.getClient().setPassword(new String(passwordField.getPassword()));
+
+        // Try to connect to the given URL and port
+        String url = urlField.getText() + ":" + portField.getText();
+        try {
+            App.getClient().connect(url);
+        } catch (URISyntaxException ex) {
+            System.out.println("\nFrom LoginPanel.login()");
+            ex.printStackTrace();
+        }
     }
 }
