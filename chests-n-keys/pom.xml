@@ -16,14 +16,6 @@
     <maven.compiler.release>17</maven.compiler.release>
   </properties>
 
-  <repositories>
-    <repository>
-      <id>dev.koifysh</id>
-      <name>archipelago-client</name>
-      <url>file:${project.basedir}/local-maven-repo</url>
-    </repository>
-  </repositories>
-
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -51,7 +43,7 @@
     <dependency>
         <groupId>dev.koifysh</groupId>
         <artifactId>archipelago-client</artifactId>
-        <version>0.1.20</version>
+        <version>0.1.20-SNAPSHOT</version>
     </dependency>
   </dependencies>
 
