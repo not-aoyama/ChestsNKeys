@@ -40,11 +40,10 @@
       <artifactId>junit-jupiter-params</artifactId>
       <scope>test</scope>
     </dependency>
-    <!-- https://mvnrepository.com/artifact/dev.koifysh/archipelago-client -->
     <dependency>
         <groupId>dev.koifysh</groupId>
         <artifactId>archipelago-client</artifactId>
-        <version>0.1.19</version>
+        <version>0.1.20-SNAPSHOT</version>
     </dependency>
   </dependencies>
 
