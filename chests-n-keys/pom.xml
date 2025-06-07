@@ -16,6 +16,14 @@
     <maven.compiler.release>17</maven.compiler.release>
   </properties>
 
+  <repositories>
+    <repository>
+      <id>dev.koifysh</id>
+      <name>archipelago-client</name>
+      <url>file:${project.basedir}/local-maven-repo</url>
+    </repository>
+  </repositories>
+
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -40,11 +48,10 @@
       <artifactId>junit-jupiter-params</artifactId>
       <scope>test</scope>
     </dependency>
-    <!-- https://mvnrepository.com/artifact/dev.koifysh/archipelago-client -->
     <dependency>
         <groupId>dev.koifysh</groupId>
         <artifactId>archipelago-client</artifactId>
-        <version>0.1.19</version>
+        <version>0.1.20</version>
     </dependency>
   </dependencies>
 
