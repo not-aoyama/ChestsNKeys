@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import dev.koifysh.archipelago.Client;
 import gg.archipelago.App;
 
 import java.awt.event.ActionEvent;
@@ -71,14 +72,26 @@ public class LoginPanel extends JPanel {
     }
 
     private void login(ActionEvent e) {
+        Client client = App.getClient();
+
         // Set the slot name and password of the client
-        App.getClient().setName(slotField.getText());
-        App.getClient().setPassword(new String(passwordField.getPassword()));
+        client.setName(slotField.getText());
+        client.setPassword(new String(passwordField.getPassword()));
 
         // Try to connect to the given URL and port
         String url = urlField.getText() + ":" + portField.getText();
         try {
-            App.getClient().connect(url);
+            client.connect(url);
+
+            // Debug code: print out the room info and the lists of checked locations, missing locations, and items.
+            System.out.println("Room info:");
+            System.out.println(client.getRoomInfo());
+            System.out.println("\nList of received items:");
+            client.getItemManager().getReceivedItems().stream().forEach(System.out::println);
+            System.out.println("\nList of checked locations:");
+            client.getLocationManager().getCheckedLocations().stream().forEach(System.out::println);
+            System.out.println("\nList of missing locations:");
+            client.getLocationManager().getMissingLocations().stream().forEach(System.out::println);
         } catch (URISyntaxException ex) {
             System.out.println("\nFrom LoginPanel.login()");
             ex.printStackTrace();
