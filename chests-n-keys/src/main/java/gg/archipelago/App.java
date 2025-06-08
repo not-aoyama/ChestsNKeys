@@ -86,7 +86,14 @@ public class App {
         JFrame appFrame = instance.frame;
         appFrame.remove(instance.loginPanel);
         appFrame.add(new ChestsPanel(numChests));
-        appFrame.pack(); // Refresh the frame to show our changes.
+        refresh();
+    }
+
+    /**
+     * Refreshes the app window to show any new changes made to its contents.
+     */
+    public static void refresh() {
+        instance.frame.pack();
     }
 
     public static void main(String[] args) {
