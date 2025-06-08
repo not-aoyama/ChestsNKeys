@@ -59,16 +59,6 @@ public class App {
         frame.setVisible(true);
     }
 
-    public static void main(String[] args) {
-        /*
-         * Gonna be real, I don't understand why we have to use SwingUtilities.invokeLater().
-         * Something about thread safety, I think, but do I even need concurrency?
-         * Whatever, I'll use it just in case.
-         */
-        // Create the App
-        SwingUtilities.invokeLater(() -> new App());
-    }
-
     /**
      * Returns the ChestsNKeysClient of the app, or null if there is no app yet.
      * 
@@ -77,5 +67,15 @@ public class App {
     public static ChestsNKeysClient getClient() {
         // Return null if there is no App yet for whatever reason.
         return (instance == null) ? null : instance.client;
+    }
+
+    public static void main(String[] args) {
+        /*
+         * Gonna be real, I don't understand why we have to use SwingUtilities.invokeLater().
+         * Something about thread safety, I think, but do I even need concurrency?
+         * Whatever, I'll use it just in case.
+         */
+        // Create the App
+        SwingUtilities.invokeLater(() -> new App());
     }
 }
