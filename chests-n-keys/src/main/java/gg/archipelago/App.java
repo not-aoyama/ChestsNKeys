@@ -6,6 +6,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
+import gg.archipelago.network.ChestsNKeysClient;
 import gg.archipelago.view.LoginPanel;
 
 /**
