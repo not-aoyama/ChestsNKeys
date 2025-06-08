@@ -5,6 +5,7 @@ import java.util.HashMap;
 import dev.koifysh.archipelago.events.ArchipelagoEventListener;
 import dev.koifysh.archipelago.events.ConnectionResultEvent;
 import dev.koifysh.archipelago.events.Event;
+import gg.archipelago.App;
 
 /**
  * This class contains methods that handle varions ArchipelagoEvents.
@@ -20,7 +21,16 @@ public class EventListener {
 
     @ArchipelagoEventListener
     public void onConnectionResult(ConnectionResultEvent event) {
-        // Debug code: print out the slot data
-        System.out.println(event.getSlotData(HashMap.class));
+        /*
+         * Figure out how many chests there are.
+         * This can be done by counting how many missing locations and checked locations there are,
+         * then subtracting 1 because all locations except the Desk are chests.
+         */
+        int numCheckedLocations = client.getLocationManager().getCheckedLocations().size();
+        int numMissingLocations = client.getLocationManager().getMissingLocations().size();
+        int numChests = numCheckedLocations + numMissingLocations - 1;
+
+        // Hide the login menu and display the actual game!
+        App.displayGame(numChests);
     }
 }

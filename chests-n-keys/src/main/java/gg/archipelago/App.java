@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 import gg.archipelago.network.ChestsNKeysClient;
+import gg.archipelago.view.ChestsPanel;
 import gg.archipelago.view.LoginPanel;
 
 /**
@@ -23,6 +24,11 @@ public class App {
      * The window in which the app's GUI runs.
      */
     private final JFrame frame = new JFrame();
+
+    /**
+     * The menu used for logging into the server.
+     */
+    private LoginPanel loginPanel;
 
     /**
      * The client that connects to the Archipelago server.
@@ -50,7 +56,7 @@ public class App {
     private void displayFrame() {
         // Start by displaying the login menu in the frame.
         frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.X_AXIS));
-        LoginPanel loginPanel = new LoginPanel();
+        loginPanel = new LoginPanel();
         loginPanel.setAlignmentY(Component.CENTER_ALIGNMENT);
         frame.getContentPane().add(loginPanel);
 
@@ -68,6 +74,19 @@ public class App {
     public static ChestsNKeysClient getClient() {
         // Return null if there is no App yet for whatever reason.
         return (instance == null) ? null : instance.client;
+    }
+
+    /**
+     * After the user finishes logging into the server, this method will be called. This method gets rid of the login
+     * menu and displays the actual game itself.
+     * 
+     * @param numChests the number of chests in the game
+     */
+    public static void displayGame(int numChests) {
+        JFrame appFrame = instance.frame;
+        appFrame.remove(instance.loginPanel);
+        appFrame.add(new ChestsPanel(numChests));
+        appFrame.pack(); // Refresh the frame to show our changes.
     }
 
     public static void main(String[] args) {

@@ -13,6 +13,9 @@ import gg.archipelago.App;
 import java.awt.event.ActionEvent;
 import java.net.URISyntaxException;
 
+/**
+ * This is the menu where the user logs in to connect to the server.
+ */
 public class LoginPanel extends JPanel {
     // Make the text fields class variables so they can be accessed in multiple methods.
     private final JTextField urlField = new JTextField();
