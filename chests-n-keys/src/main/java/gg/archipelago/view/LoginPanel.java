@@ -82,16 +82,6 @@ public class LoginPanel extends JPanel {
         String url = urlField.getText() + ":" + portField.getText();
         try {
             client.connect(url);
-
-            // Debug code: print out the room info and the lists of checked locations, missing locations, and items.
-            System.out.println("Room info:");
-            System.out.println(client.getRoomInfo());
-            System.out.println("\nList of received items:");
-            client.getItemManager().getReceivedItems().stream().forEach(System.out::println);
-            System.out.println("\nList of checked locations:");
-            client.getLocationManager().getCheckedLocations().stream().forEach(System.out::println);
-            System.out.println("\nList of missing locations:");
-            client.getLocationManager().getMissingLocations().stream().forEach(System.out::println);
         } catch (URISyntaxException ex) {
             System.out.println("\nFrom LoginPanel.login()");
             ex.printStackTrace();
