@@ -31,6 +31,13 @@ public class App {
     private LoginPanel loginPanel;
 
     /**
+     * Whether or not the player has chosen to enable keys.
+     * If this is true, then the chests are locked until their respective keys are received.
+     * If this is false, then all the chests are unlocked from the beginning.
+     */
+    private boolean keysEnabled;
+
+    /**
      * The client that connects to the Archipelago server.
      */
     private final ChestsNKeysClient client = new ChestsNKeysClient();
@@ -94,6 +101,14 @@ public class App {
      */
     public static void refresh() {
         instance.frame.pack();
+    }
+
+    public static boolean getKeysEnabled() {
+        return instance.keysEnabled;
+    }
+
+    public static void setKeysEnabled(boolean keysEnabled) {
+        instance.keysEnabled = keysEnabled;
     }
 
     public static void main(String[] args) {

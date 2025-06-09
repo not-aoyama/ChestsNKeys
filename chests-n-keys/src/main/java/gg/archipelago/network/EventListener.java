@@ -30,6 +30,28 @@ public class EventListener {
         int numMissingLocations = client.getLocationManager().getMissingLocations().size();
         int numChests = numCheckedLocations + numMissingLocations - 1;
 
+        /*
+         * Figure out whether keys are enabled. This is listed in the slot data under the parameter keys_enabled.
+         * If keys are enabled, keys_enabled is 1.0. If keys are disabled, keys_enabled is 0.0.
+         */
+        Object keysEnabledObj = event.getSlotData(HashMap.class).get("keys_enabled");
+        try {
+            Double keysEnabled = (Double)keysEnabledObj;
+            // int keysEnabled = Integer.parseInt(keysEnabledObj.toString());
+            switch (keysEnabled.intValue()) {
+                case 0:
+                    App.setKeysEnabled(false);
+                    break;
+                case 1:
+                    App.setKeysEnabled(true);
+                    break;
+                default:
+                    throw new InvalidSlotDataException("Invalid slot data; \"keys_enabled\" should be 0.0 or 1.0 but is " + keysEnabled);
+            }
+        } catch (NumberFormatException | ClassCastException ex) {
+            throw new InvalidSlotDataException("Invalid slot data; \"keys_enabled\" should be 0.0 or 1.0 but is " + keysEnabledObj);
+        }
+
         // Hide the login menu and display the actual game!
         App.displayGame(numChests);
     }
