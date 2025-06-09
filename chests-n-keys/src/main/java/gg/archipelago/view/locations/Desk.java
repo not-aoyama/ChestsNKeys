@@ -13,6 +13,7 @@ public class Desk extends Location {
      */
     @Override
     public void update() {
+        // For now, the Desk is just represented by plain text. Will be replaced in the final release.
         if (isChecked()) {
             setText("No more free items.");
         } else {
@@ -22,7 +23,10 @@ public class Desk extends Location {
 
     @Override
     public void onClick() {
-        // For now, just prints a debug message.
-        System.out.println("The Desk was clicked!");
+        // Attempt to check the Desk when it is clicked.
+        check();
+
+        // Refresh the window to show the update.
+        App.refresh();
     }
 }
