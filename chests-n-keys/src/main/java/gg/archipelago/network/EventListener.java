@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import dev.koifysh.archipelago.events.ArchipelagoEventListener;
 import dev.koifysh.archipelago.events.ConnectionResultEvent;
-import dev.koifysh.archipelago.events.Event;
+import dev.koifysh.archipelago.events.ReceiveItemEvent;
 import gg.archipelago.App;
 
 /**
@@ -54,5 +54,11 @@ public class EventListener {
 
         // Hide the login menu and display the actual game!
         App.displayGame(numChests);
+    }
+
+    @ArchipelagoEventListener
+    public void onReceiveItem(ReceiveItemEvent event) {
+        // Debug print statement for now.
+        System.out.println("Item received: " + event.getItemName());
     }
 }
