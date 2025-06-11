@@ -1,6 +1,7 @@
 package gg.archipelago.network;
 
 import dev.koifysh.archipelago.Client;
+import dev.koifysh.archipelago.flags.ItemsHandling;
 
 public class ChestsNKeysClient extends Client {
 
@@ -10,6 +11,9 @@ public class ChestsNKeysClient extends Client {
 
         // Create and register an EventListener.
         getEventManager().registerListener(new EventListener(this));
+
+        // Have the server notify us of all received items.
+        setItemsHandlingFlags(ItemsHandling.SEND_ITEMS + ItemsHandling.SEND_OWN_ITEMS + ItemsHandling.SEND_STARTING_INVENTORY);
     }
 
     @Override
