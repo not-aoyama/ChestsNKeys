@@ -31,6 +31,11 @@ public class App {
     private LoginPanel loginPanel;
 
     /**
+     * The menu that displays all of the player's chests and the player's desk.
+     */
+    private ChestsPanel chestsPanel;
+
+    /**
      * Whether or not the player has chosen to enable keys.
      * If this is true, then the chests are locked until their respective keys are received.
      * If this is false, then all the chests are unlocked from the beginning.
@@ -92,7 +97,8 @@ public class App {
     public static void displayGame(int numChests) {
         JFrame appFrame = instance.frame;
         appFrame.remove(instance.loginPanel);
-        appFrame.add(new ChestsPanel(numChests));
+        instance.chestsPanel = new ChestsPanel(numChests);
+        appFrame.add(instance.chestsPanel);
         refresh();
     }
 
@@ -109,6 +115,17 @@ public class App {
 
     public static void setKeysEnabled(boolean keysEnabled) {
         instance.keysEnabled = keysEnabled;
+    }
+
+    /**
+     * Updates the appearance of the Chest with the given number to reflect whether it has been checked and whether it
+     * has been unlocked. If no chests are being displayed at the moment, this method does nothing.
+     * 
+     * @param chestNumber the number of the Chest to update. For example, if 2 is passed in, Chest 2 will be updated.
+     */
+    public static void updateChest(int chestsNumber) {
+        if (instance.chestsPanel != null)
+            instance.chestsPanel.updateChest(chestsNumber);
     }
 
     public static void main(String[] args) {

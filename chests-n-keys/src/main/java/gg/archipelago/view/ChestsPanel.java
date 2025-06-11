@@ -1,6 +1,5 @@
 package gg.archipelago.view;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import gg.archipelago.App;
@@ -39,5 +38,15 @@ public class ChestsPanel extends JPanel {
 
         // Refresh the window to show the locations!
         App.refresh();
+    }
+
+    /**
+     * Updates the appearance of the Chest with the given number to reflect whether it has been checked and whether it
+     * has been unlocked.
+     * 
+     * @param chestNumber the number of the Chest to update. For example, if 2 is passed in, Chest 2 will be updated.
+     */
+    public void updateChest(int chestNumber) {
+        locations[chestNumber].update();
     }
 }

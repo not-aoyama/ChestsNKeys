@@ -4,6 +4,22 @@ import dev.koifysh.archipelago.Client;
 import dev.koifysh.archipelago.flags.ItemsHandling;
 
 public class ChestsNKeysClient extends Client {
+    /**
+     * Every Chests 'n' Keys item ID in the server has five digits, the first two of which are 69. (Haha I'm so funny).
+     * This number will be very helpful for obtaining the item IDs of Keys.
+     */
+    public static final long ITEM_ID_PREFIX = 69_000;
+
+    /**
+     * The item ID of the Item That Does Nothing.
+     */
+    public static final long ITEM_THAT_DOES_NOTHING_ID = 69_420;
+
+    /**
+     * Every Chests 'n' Keys location ID in the server has six digits, the first three of which are 420. (Haha I'm so
+     * funny). This number will be very helpful to subclasses of Location when passing in the location ID.
+     */
+    public static final long LOCATION_ID_PREFIX = 420_000;
 
     public ChestsNKeysClient() {
         // Set the name of the game

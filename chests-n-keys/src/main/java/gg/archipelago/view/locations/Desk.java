@@ -1,11 +1,12 @@
 package gg.archipelago.view.locations;
 
 import gg.archipelago.App;
+import gg.archipelago.network.ChestsNKeysClient;
 
 public class Desk extends Location {
     public Desk() {
         // The ID is just 420000.
-        super(LOCATION_ID_PREFIX);
+        super(ChestsNKeysClient.LOCATION_ID_PREFIX);
     }
 
     /**

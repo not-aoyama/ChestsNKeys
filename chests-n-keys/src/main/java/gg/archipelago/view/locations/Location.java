@@ -16,12 +16,6 @@ public abstract class Location extends JLabel {
     private final Long locationId;
 
     /**
-     * Every Chests 'n' Keys location ID in the server has six digits, the first three of which are 420. (Haha I'm so
-     * funny). This number will be very helpful to subclasses of Location when passing in the location ID.
-     */
-    public static final long LOCATION_ID_PREFIX = 420_000;
-
-    /**
      * Creates a new location with the given numerical location ID.
      * 
      * @param locationId the number that the server uses to represent this location

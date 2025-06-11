@@ -58,7 +58,17 @@ public class EventListener {
 
     @ArchipelagoEventListener
     public void onReceiveItem(ReceiveItemEvent event) {
-        // Debug print statement for now.
-        System.out.println("Item received: " + event.getItemName());
+        /*
+         * If the item received is a key, update its corresponding Chest in the ChestsPanel.
+         * Every item is a key, except for the Item That Does Nothing, which has ID 69420.
+         */
+        if (event.getItemID() != ChestsNKeysClient.ITEM_THAT_DOES_NOTHING_ID) {
+            /*
+             * We can find a key's number via the last three digits of its ID.
+             * For instance, Key 1 has ID 69001, and Key 256 has ID 69256.
+             */
+            int keyNumber = (int)(event.getItemID() - ChestsNKeysClient.ITEM_ID_PREFIX);
+            App.updateChest(keyNumber);
+        }
     }
 }

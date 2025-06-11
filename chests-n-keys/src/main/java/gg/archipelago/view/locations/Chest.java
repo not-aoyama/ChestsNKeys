@@ -1,6 +1,7 @@
 package gg.archipelago.view.locations;
 
 import gg.archipelago.App;
+import gg.archipelago.network.ChestsNKeysClient;
 
 /**
  * Each game of Chests 'n' Keys contains anywhere from 1 to 256 Chests that the player must open. Each Chest is
@@ -14,14 +15,8 @@ public class Chest extends Location {
      */
     private final int number;
 
-    /**
-     * Every Chests 'n' Keys item ID in the server has five digits, the first two of which are 69. (Haha I'm so funny).
-     * This number will be very helpful for obtaining the item IDs of Keys.
-     */
-    private static final long ITEM_ID_PREFIX = 69_000;
-
     public Chest(int number) {
-        super(LOCATION_ID_PREFIX + number); // Use the chest number to determine the location ID
+        super(ChestsNKeysClient.LOCATION_ID_PREFIX + number); // Use the chest number to determine the location ID
         this.number = number;
 
         /*
@@ -40,7 +35,7 @@ public class Chest extends Location {
      */
     private boolean isUnlocked() {
         // Has the player received this chest's key? If so, the chest is unlocked.
-        long keyId = ITEM_ID_PREFIX + number;
+        long keyId = ChestsNKeysClient.ITEM_ID_PREFIX + number;
         if (App.getClient().getItemManager().getReceivedItemIDs().contains(keyId)) {
             return true;
         }
@@ -49,6 +44,11 @@ public class Chest extends Location {
         return !App.getKeysEnabled();
     }
 
+    /**
+     * Updates this Chests's appearance and tooltip to match whether it has been checked or not, and whether it has
+     * been unlocked. This method should be called whenever the game starts up, whenever this Chest is checked, and
+     * whenever a new item is received.
+     */
     @Override
     public void update() {
         // For now, set plain text instead of an image. This will be changed eventually.
