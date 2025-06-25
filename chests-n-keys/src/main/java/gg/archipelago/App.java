@@ -4,6 +4,7 @@ import java.awt.Component;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 
 import gg.archipelago.network.ChestsNKeysClient;
@@ -99,6 +100,13 @@ public class App {
         appFrame.remove(instance.loginPanel);
         instance.chestsPanel = new ChestsPanel(numChests);
         appFrame.add(instance.chestsPanel);
+        refresh();
+    }
+
+    public static void displayWinMessage() {
+        JFrame appFrame = instance.frame;
+        appFrame.removeAll();
+        appFrame.add(new JLabel("U R WINNAR!!!1"));
         refresh();
     }
 

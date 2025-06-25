@@ -20,14 +20,14 @@ public class Desk extends Location {
         } else {
             setText("Click for a free item!");
         }
+
+        // Refresh the window to show the update.
+        App.refresh();
     }
 
     @Override
     public void onClick() {
         // Attempt to check the Desk when it is clicked.
         check();
-
-        // Refresh the window to show the update.
-        App.refresh();
     }
 }

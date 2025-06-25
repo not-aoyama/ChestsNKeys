@@ -4,6 +4,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JLabel;
 
+import dev.koifysh.archipelago.ClientStatus;
+import dev.koifysh.archipelago.LocationManager;
 import gg.archipelago.App;
 
 /**
@@ -46,11 +48,21 @@ public abstract class Location extends JLabel {
 
     /**
      * If this location hasn't been checked yet, checks this location. and updates its appearance to match.
+     * Also sets the game status to goal and displays the win screen if all locations have been checked.
      */
     public void check() {
+        LocationManager locationManager = App.getClient().getLocationManager();
+
         if (!isChecked()) {
-            App.getClient().getLocationManager().checkLocation(locationId);
+            locationManager.checkLocation(locationId);
             update();
+
+            // Check if there are no more missing locations.
+            if (locationManager.getMissingLocations().isEmpty()) {
+                // Congratulations, the player won!
+                App.getClient().setGameState(ClientStatus.CLIENT_GOAL);
+                App.displayWinMessage();
+            }
         }
     }
 
@@ -63,6 +75,7 @@ public abstract class Location extends JLabel {
 
     /**
      * This method is called whenever this Location is clicked on.
+     * The default behavior is to 
      */
     protected abstract void onClick();
 }

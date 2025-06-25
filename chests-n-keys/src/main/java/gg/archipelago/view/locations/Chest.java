@@ -64,6 +64,9 @@ public class Chest extends Location {
         else {
             setText("Chest " + number + "\n(Locked)");
         }
+
+        // Refresh the window to show the update.
+        App.refresh();
     }
 
     @Override
@@ -74,9 +77,6 @@ public class Chest extends Location {
          */
         if (isUnlocked()) {
             check();
-
-            // Refresh the window to show the update.
-            App.refresh();
         }
     }
 }
