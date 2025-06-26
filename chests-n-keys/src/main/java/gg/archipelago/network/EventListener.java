@@ -2,6 +2,7 @@ package gg.archipelago.network;
 
 import java.util.HashMap;
 
+import dev.koifysh.archipelago.ClientStatus;
 import dev.koifysh.archipelago.events.ArchipelagoEventListener;
 import dev.koifysh.archipelago.events.ConnectionResultEvent;
 import dev.koifysh.archipelago.events.ReceiveItemEvent;
@@ -13,47 +14,52 @@ import gg.archipelago.App;
  * Every time an event occurs, its corresponding method is automatically called.
  */
 public class EventListener {
-    private final ChestsNKeysClient client;
-
-    public EventListener(ChestsNKeysClient client) {
-        this.client = client;
-    }
-
     @ArchipelagoEventListener
     public void onConnectionResult(ConnectionResultEvent event) {
-        /*
-         * Figure out how many chests there are.
-         * This can be done by counting how many missing locations and checked locations there are,
-         * then subtracting 1 because all locations except the Desk are chests.
-         */
-        int numCheckedLocations = client.getLocationManager().getCheckedLocations().size();
-        int numMissingLocations = client.getLocationManager().getMissingLocations().size();
-        int numChests = numCheckedLocations + numMissingLocations - 1;
+        ChestsNKeysClient client = App.getClient();
 
         /*
-         * Figure out whether keys are enabled. This is listed in the slot data under the parameter keys_enabled.
-         * If keys are enabled, keys_enabled is 1.0. If keys are disabled, keys_enabled is 0.0.
+         * If the player has already goaled, skip to the win screen.
+         * Otherwise, display the main game screen.
          */
-        Object keysEnabledObj = event.getSlotData(HashMap.class).get("keys_enabled");
-        try {
-            Double keysEnabled = (Double)keysEnabledObj;
-            // int keysEnabled = Integer.parseInt(keysEnabledObj.toString());
-            switch (keysEnabled.intValue()) {
-                case 0:
-                    App.setKeysEnabled(false);
-                    break;
-                case 1:
-                    App.setKeysEnabled(true);
-                    break;
-                default:
-                    throw new InvalidSlotDataException("Invalid slot data; \"keys_enabled\" should be 0.0 or 1.0 but is " + keysEnabled);
+        if (client.hasGoaled()) {
+            client.setGameState(ClientStatus.CLIENT_GOAL);
+            App.displayWinMessage();
+        } else {
+            /*
+            * Figure out how many chests there are.
+            * This can be done by counting how many missing locations and checked locations there are,
+            * then subtracting 1 because all locations except the Desk are chests.
+            */
+            int numCheckedLocations = client.getLocationManager().getCheckedLocations().size();
+            int numMissingLocations = client.getLocationManager().getMissingLocations().size();
+            int numChests = numCheckedLocations + numMissingLocations - 1;
+
+            /*
+            * Figure out whether keys are enabled. This is listed in the slot data under the parameter keys_enabled.
+            * If keys are enabled, keys_enabled is 1.0. If keys are disabled, keys_enabled is 0.0.
+            */
+            Object keysEnabledObj = event.getSlotData(HashMap.class).get("keys_enabled");
+            try {
+                Double keysEnabled = (Double)keysEnabledObj;
+                // int keysEnabled = Integer.parseInt(keysEnabledObj.toString());
+                switch (keysEnabled.intValue()) {
+                    case 0:
+                        App.setKeysEnabled(false);
+                        break;
+                    case 1:
+                        App.setKeysEnabled(true);
+                        break;
+                    default:
+                        throw new InvalidSlotDataException("Invalid slot data; \"keys_enabled\" should be 0.0 or 1.0 but is " + keysEnabled);
+                }
+            } catch (NumberFormatException | ClassCastException ex) {
+                throw new InvalidSlotDataException("Invalid slot data; \"keys_enabled\" should be 0.0 or 1.0 but is " + keysEnabledObj);
             }
-        } catch (NumberFormatException | ClassCastException ex) {
-            throw new InvalidSlotDataException("Invalid slot data; \"keys_enabled\" should be 0.0 or 1.0 but is " + keysEnabledObj);
-        }
 
-        // Hide the login menu and display the actual game!
-        App.displayGame(numChests);
+            // Hide the login menu and display the actual game!
+            App.displayGame(numChests);
+        }
     }
 
     @ArchipelagoEventListener

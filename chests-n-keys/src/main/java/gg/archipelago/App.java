@@ -5,6 +5,7 @@ import java.awt.Component;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import gg.archipelago.network.ChestsNKeysClient;
@@ -105,7 +106,16 @@ public class App {
 
     public static void displayWinMessage() {
         JFrame appFrame = instance.frame;
-        appFrame.removeAll();
+        
+        // Remove the login menu from the window. This does nothing if the login menu is no longer there.
+        appFrame.remove(instance.loginPanel);
+
+        // Remove the main game display from the window unless it hasn't been instantiated yet.
+        if (instance.chestsPanel != null) {
+            appFrame.remove(instance.chestsPanel);
+        }
+
+        // Display the win message!
         appFrame.add(new JLabel("U R WINNAR!!!1"));
         refresh();
     }

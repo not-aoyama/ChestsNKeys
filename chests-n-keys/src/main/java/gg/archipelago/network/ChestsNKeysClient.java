@@ -26,7 +26,7 @@ public class ChestsNKeysClient extends Client {
         setGame("Chests 'n' Keys");
 
         // Create and register an EventListener.
-        getEventManager().registerListener(new EventListener(this));
+        getEventManager().registerListener(new EventListener());
 
         // Have the server notify us of all received items.
         setItemsHandlingFlags(ItemsHandling.SEND_ITEMS + ItemsHandling.SEND_OWN_ITEMS + ItemsHandling.SEND_STARTING_INVENTORY);
@@ -42,5 +42,15 @@ public class ChestsNKeysClient extends Client {
     public void onClose(String Reason, int attemptingReconnect) {
         System.out.println("\nFrom ChestNKeysClient.onClose()");
         System.out.println("Connection closed for reason: " + Reason);
+    }
+
+    /**
+     * Returns whether the player has achieved their goal. The goal is to open all of the chests and claim the free
+     * item; in other words, to check all of the locations.
+     * 
+     * @return whether the player has achieved their goal
+     */
+    public boolean hasGoaled() {
+        return getLocationManager().getMissingLocations().isEmpty();
     }
 }
