@@ -146,6 +146,15 @@ public class App {
             instance.chestsPanel.updateChest(chestsNumber);
     }
 
+    /**
+     * Updates the appearance of the Desk to reflect whether it has been checked. If the Desk isn't being displayed at
+     * the moment, this method does nothing.
+     */
+    public static void updateDesk() {
+        if (instance.chestsPanel != null)
+            instance.chestsPanel.updateDesk();
+    }
+
     public static void main(String[] args) {
         /*
          * Gonna be real, I don't understand why we have to use SwingUtilities.invokeLater().

@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import dev.koifysh.archipelago.ClientStatus;
 import dev.koifysh.archipelago.events.ArchipelagoEventListener;
+import dev.koifysh.archipelago.events.CheckedLocationsEvent;
 import dev.koifysh.archipelago.events.ConnectionResultEvent;
 import dev.koifysh.archipelago.events.ReceiveItemEvent;
 import gg.archipelago.App;
@@ -59,6 +60,35 @@ public class EventListener {
 
             // Hide the login menu and display the actual game!
             App.displayGame(numChests);
+        }
+    }
+
+    @ArchipelagoEventListener
+    public void onCheckedLocations(CheckedLocationsEvent event) {
+        // Update every location's onscreen apperance to reflect that it has been checked.
+        for (Long locationId : event.checkedLocations) {
+            /*
+             * For some reason, when this event occurs, the locations that have been checked are NOT in the list of
+             * checked locations. If we don't add them in, the locations will still look like they haven't been
+             * checked.
+             */
+            App.getClient().getLocationManager().getCheckedLocations().add(locationId);
+            App.getClient().getLocationManager().getMissingLocations().remove(locationId);
+
+            // Get the last three digits of the location ID.
+            long locationIdSuffix = locationId - ChestsNKeysClient.LOCATION_ID_PREFIX;
+
+            // If the last three digits are 000, the location that's been checked is the Desk.
+            if (locationIdSuffix == 0) {
+                App.updateDesk();
+            }
+            /*
+             * Otherwise, the location that's been updated is the Chest whose number equals the last three digits.
+             * E.G. location ID 420001 corresponds to Chest 1.
+             */
+            else {
+                App.updateChest((int)locationIdSuffix);
+            }
         }
     }
 

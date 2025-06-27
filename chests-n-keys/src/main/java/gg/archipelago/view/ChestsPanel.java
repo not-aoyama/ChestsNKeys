@@ -16,6 +16,11 @@ public class ChestsPanel extends JPanel {
      */
     private final Location[] locations;
 
+    /**
+     * The index in the location array at which the Desk is stored.
+     */
+    private static final int DESK_INDEX = 0;
+
     public ChestsPanel(int numChests) {
         /*
          * Initialize the list of locations.
@@ -24,7 +29,7 @@ public class ChestsPanel extends JPanel {
         locations = new Location[numChests + 1];
 
         // Initialize the Desk and store it at index 0.
-        locations[0] = new Desk();
+        locations[DESK_INDEX] = new Desk();
 
         // Initialize the chests and store them in the array as well.
         for (int i = 1; i <= numChests; i++) {
@@ -48,5 +53,12 @@ public class ChestsPanel extends JPanel {
      */
     public void updateChest(int chestNumber) {
         locations[chestNumber].update();
+    }
+
+    /**
+     * Updates the appearance of the Desk to reflect whether it has been checked.
+     */
+    public void updateDesk() {
+        locations[DESK_INDEX].update();
     }
 }
