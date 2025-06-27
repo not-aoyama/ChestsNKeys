@@ -57,12 +57,8 @@ public abstract class Location extends JLabel {
             locationManager.checkLocation(locationId);
             update();
 
-            // Check if the goal has been achieved
-            if (App.getClient().hasGoaled()) {
-                // Congratulations, the player won!
-                App.getClient().setGameState(ClientStatus.CLIENT_GOAL);
-                App.displayWinMessage();
-            }
+            // Check if the goal has been achieved, and if so, display the win screen.
+            App.displayWinMessageIfGoaled();
         }
     }
 

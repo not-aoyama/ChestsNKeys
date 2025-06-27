@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import dev.koifysh.archipelago.ClientStatus;
 import gg.archipelago.network.ChestsNKeysClient;
 import gg.archipelago.view.ChestsPanel;
 import gg.archipelago.view.LoginPanel;
@@ -36,6 +37,11 @@ public class App {
      * The menu that displays all of the player's chests and the player's desk.
      */
     private ChestsPanel chestsPanel;
+
+    /**
+     * The message that is displayed when the player wins.
+     */
+    private final JLabel winMessage = new JLabel("U R WINNAR!!!1");
 
     /**
      * Whether or not the player has chosen to enable keys.
@@ -104,20 +110,35 @@ public class App {
         refresh();
     }
 
-    public static void displayWinMessage() {
-        JFrame appFrame = instance.frame;
-        
-        // Remove the login menu from the window. This does nothing if the login menu is no longer there.
-        appFrame.remove(instance.loginPanel);
+    /**
+     * If the player has reached their goal, this method will set the player's status in the multiworld to goaled and
+     * display a win screen.
+     */
+    public static void displayWinMessageIfGoaled() {
+        if (instance.client.hasGoaled()) {
+            // Set the game state to goaled.
+            instance.client.setGameState(ClientStatus.CLIENT_GOAL);
 
-        // Remove the main game display from the window unless it hasn't been instantiated yet.
-        if (instance.chestsPanel != null) {
-            appFrame.remove(instance.chestsPanel);
+            JFrame appFrame = instance.frame;
+            
+            // Remove the login menu from the window. This does nothing if the login menu is no longer there.
+            appFrame.remove(instance.loginPanel);
+
+            // Remove the main game display from the window unless it hasn't been instantiated yet.
+            if (instance.chestsPanel != null) {
+                appFrame.remove(instance.chestsPanel);
+            }
+
+            /*
+             * If a win message is already being displayed, remove it before adding a new one.
+             * Otherwise, two win messages may be displayed at once.
+             */
+            appFrame.remove(instance.winMessage);
+
+            // Display the win message!
+            appFrame.add(instance.winMessage);
+            refresh();
         }
-
-        // Display the win message!
-        appFrame.add(new JLabel("U R WINNAR!!!1"));
-        refresh();
     }
 
     /**

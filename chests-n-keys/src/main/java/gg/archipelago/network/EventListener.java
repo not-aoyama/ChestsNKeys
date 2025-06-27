@@ -24,8 +24,7 @@ public class EventListener {
          * Otherwise, display the main game screen.
          */
         if (client.hasGoaled()) {
-            client.setGameState(ClientStatus.CLIENT_GOAL);
-            App.displayWinMessage();
+            App.displayWinMessageIfGoaled();
         } else {
             /*
             * Figure out how many chests there are.
@@ -90,6 +89,9 @@ public class EventListener {
                 App.updateChest((int)locationIdSuffix);
             }
         }
+
+        // Now that more locations have been checked, we need to see whether the player has goaled.
+        App.displayWinMessageIfGoaled();
     }
 
     @ArchipelagoEventListener
